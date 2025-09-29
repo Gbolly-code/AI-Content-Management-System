@@ -53,28 +53,12 @@ npm install
 ```
 
 ### 3. Environment Setup
-Copy the environment template and fill in your credentials:
+Copy the environment template and configure your credentials:
 ```bash
 cp env.template .env.local
 ```
 
-Fill in your `.env.local` file:
-```env
-# Firebase Configuration
-NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=123456789
-NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-
-# OpenAI Configuration
-OPENAI_API_KEY=your_openai_api_key
-NEXT_PUBLIC_OPENAI_API_KEY=your_openai_api_key
-
-# App Configuration
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
+Configure your Firebase and OpenAI credentials in the `.env.local` file.
 
 ### 4. Database Setup
 
