@@ -80,37 +80,37 @@ export default function DashboardLayout({
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden lg:flex lg:flex-shrink-0">
-        <div className="flex flex-col w-64">
+    <div className="hidden lg:flex lg:flex-shrink-0">
+        <div className="flex flex-col w-48">
           <div className="flex flex-col h-0 flex-1 border-r border-gray-700 bg-gray-900">
             <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-              <div className="flex items-center flex-shrink-0 px-4">
-                <h1 className="text-xl font-bold text-white">AI CMS</h1>
+              <div className="flex items-center flex-shrink-0 px-3">
+                <h1 className="text-lg font-bold text-white">AI CMS</h1>
               </div>
-              <nav className="mt-5 flex-1 px-2 space-y-1">
+              <nav className="mt-5 flex-1 px-1 space-y-1">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
                     className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-800 hover:text-white"
                   >
-                    <span className="mr-3 text-lg">{item.icon}</span>
+                    <span className="mr-2 text-base">{item.icon}</span>
                     {item.name}
                   </Link>
                 ))}
               </nav>
             </div>
-            <div className="flex-shrink-0 flex border-t border-gray-700 p-4">
+            <div className="flex-shrink-0 flex border-t border-gray-700 p-3">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
-                    <span className="text-white font-medium">
+                  <div className="h-7 w-7 rounded-full bg-blue-500 flex items-center justify-center">
+                    <span className="text-white font-medium text-sm">
                       {user.email?.charAt(0).toUpperCase()}
                     </span>
                   </div>
                 </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-white">{user.email}</p>
+                <div className="ml-2">
+                  <p className="text-xs font-medium text-white truncate">{user.email}</p>
                   <button
                     onClick={signOut}
                     className="text-xs text-gray-400 hover:text-white"
