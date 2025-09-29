@@ -169,7 +169,7 @@ export default function CreatePostPage() {
 
   return (
     <div>
-      <div className="mb-8">
+      <div className="mb-8 bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
         <h1 className="text-3xl font-light text-white">Create New Post</h1>
         <p className="mt-2 text-white/80 font-light">
           Create a new blog post with AI assistance.
@@ -188,42 +188,42 @@ export default function CreatePostPage() {
             <div className="space-y-6">
               {/* Title Field */}
               <div className="relative">
+                <label 
+                  htmlFor="title" 
+                  className="block text-sm font-light text-white/90 mb-2"
+                >
+                  Title *
+                </label>
                 <input
                   type="text"
                   id="title"
                   name="title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-white/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="Enter your post title"
                   required
                 />
-                <label 
-                  htmlFor="title" 
-                  className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-400"
-                >
-                  Title *
-                </label>
               </div>
 
               {/* Slug Field */}
               <div className="relative">
+                <label 
+                  htmlFor="slug" 
+                  className="block text-sm font-light text-white/90 mb-2"
+                >
+                  Slug *
+                </label>
                 <input
                   type="text"
                   id="slug"
                   name="slug"
                   value={formData.slug}
                   onChange={handleInputChange}
-                  className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-white/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="url-friendly-slug"
                   required
                 />
-                <label 
-                  htmlFor="slug" 
-                  className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-400"
-                >
-                  Slug *
-                </label>
               </div>
 
               {/* Category Field */}
@@ -234,12 +234,12 @@ export default function CreatePostPage() {
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-white/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="e.g., Technology, Business, Lifestyle"
                 />
                 <label 
                   htmlFor="category" 
-                  className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-400"
+                  className="block text-sm font-light text-white/90 mb-2"
                 >
                   Category
                 </label>
@@ -253,12 +253,12 @@ export default function CreatePostPage() {
                   name="tags"
                   value={formData.tags}
                   onChange={handleInputChange}
-                  className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-white/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="tag1, tag2, tag3"
                 />
                 <label 
                   htmlFor="tags" 
-                  className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-400"
+                  className="block text-sm font-light text-white/90 mb-2"
                 >
                   Tags (comma-separated)
                 </label>
@@ -266,83 +266,83 @@ export default function CreatePostPage() {
 
               {/* Featured Image Field */}
               <div className="relative">
+                <label 
+                  htmlFor="featured_image" 
+                  className="block text-sm font-light text-white/90 mb-2"
+                >
+                  Featured Image URL
+                </label>
                 <input
                   type="url"
                   id="featured_image"
                   name="featured_image"
                   value={formData.featured_image}
                   onChange={handleInputChange}
-                  className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-white/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="https://example.com/image.jpg"
                 />
-                <label 
-                  htmlFor="featured_image" 
-                  className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-400"
-                >
-                  Featured Image URL
-                </label>
               </div>
 
               {/* Status Field */}
               <div className="relative">
+                <label 
+                  htmlFor="status" 
+                  className="block text-sm font-light text-white/90 mb-2"
+                >
+                  Status
+                </label>
                 <select
                   id="status"
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 >
                   <option value="draft" className="bg-gray-800 text-white">Draft</option>
                   <option value="published" className="bg-gray-800 text-white">Published</option>
                   <option value="archived" className="bg-gray-800 text-white">Archived</option>
                 </select>
-                <label 
-                  htmlFor="status" 
-                  className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200"
-                >
-                  Status
-                </label>
               </div>
             </div>
 
             <div className="space-y-6">
               {/* Excerpt Field */}
               <div className="relative">
+                <label 
+                  htmlFor="excerpt" 
+                  className="block text-sm font-light text-white/90 mb-2"
+                >
+                  Excerpt
+                </label>
                 <textarea
                   id="excerpt"
                   name="excerpt"
                   rows={4}
                   value={formData.excerpt}
                   onChange={handleInputChange}
-                  className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                  className="w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-white/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
                   placeholder="Brief summary of your post"
                 />
-                <label 
-                  htmlFor="excerpt" 
-                  className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-400"
-                >
-                  Excerpt
-                </label>
               </div>
 
               {/* SEO Title Field */}
               <div className="relative">
+                <label 
+                  htmlFor="seo_title" 
+                  className="block text-sm font-light text-white/90 mb-2"
+                >
+                  SEO Title
+                </label>
                 <input
                   type="text"
                   id="seo_title"
                   name="seo_title"
                   value={formData.seo_title}
                   onChange={handleInputChange}
-                  className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-white/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="SEO optimized title (50-60 characters)"
                   maxLength={60}
                 />
-                <label 
-                  htmlFor="seo_title" 
-                  className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-400"
-                >
-                  SEO Title
-                </label>
                 <p className="mt-1 text-sm text-white/60">
                   {formData.seo_title.length}/60 characters
                 </p>
@@ -350,22 +350,22 @@ export default function CreatePostPage() {
 
               {/* SEO Description Field */}
               <div className="relative">
+                <label 
+                  htmlFor="seo_description" 
+                  className="block text-sm font-light text-white/90 mb-2"
+                >
+                  SEO Description
+                </label>
                 <textarea
                   id="seo_description"
                   name="seo_description"
                   rows={3}
                   value={formData.seo_description}
                   onChange={handleInputChange}
-                  className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                  className="w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-white/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
                   placeholder="SEO meta description (150-160 characters)"
                   maxLength={160}
                 />
-                <label 
-                  htmlFor="seo_description" 
-                  className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-400"
-                >
-                  SEO Description
-                </label>
                 <p className="mt-1 text-sm text-white/60">
                   {formData.seo_description.length}/160 characters
                 </p>
@@ -400,7 +400,7 @@ export default function CreatePostPage() {
               )}
             </button>
           </div>
-          <div className="relative">
+          <div className="relative mb-6">
             <textarea
               id="content"
               name="content"
@@ -412,30 +412,30 @@ export default function CreatePostPage() {
               required
             />
           </div>
-        </div>
-
-        <div className="flex justify-end space-x-4">
-          <button
-            type="button"
-            onClick={() => router.push('/dashboard/posts')}
-            className="px-6 py-3 border border-gray-600 rounded-lg shadow-sm text-sm font-light text-white bg-gray-800/50 backdrop-blur-sm hover:bg-gray-700/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-light text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 shadow-lg"
-          >
-            {loading ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Creating...
-              </>
-            ) : (
-              'Create Post'
-            )}
-          </button>
+          
+          <div className="flex justify-end space-x-4">
+            <button
+              type="button"
+              onClick={() => router.push('/dashboard/posts')}
+              className="px-6 py-3 border border-gray-600 rounded-lg shadow-sm text-sm font-light text-white bg-gray-800/50 backdrop-blur-sm hover:bg-gray-700/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-light text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 shadow-lg"
+            >
+              {loading ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Creating...
+                </>
+              ) : (
+                'Create Post'
+              )}
+            </button>
+          </div>
         </div>
       </form>
     </div>

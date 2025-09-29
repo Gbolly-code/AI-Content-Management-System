@@ -28,8 +28,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${poppins.variable} font-sans`}>
+    <html lang="en" className="bg-gray-900">
+      <body className={`${inter.variable} ${poppins.variable} font-sans bg-gray-900`}>
         <ErrorBoundary>
           <AuthProvider>
             {children}

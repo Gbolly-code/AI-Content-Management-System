@@ -57,8 +57,8 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
-      <div className="mb-8">
+    <div className="bg-gray-900/50 rounded-xl p-6">
+      <div className="mb-8 bg-gray-800/70 rounded-lg p-6">
         <h1 className="text-3xl font-bold text-white">Dashboard</h1>
         <p className="mt-2 text-gray-300">
           Welcome back, {user?.email}! Here's what's happening with your content.
@@ -67,83 +67,76 @@ export default function Dashboard() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 overflow-hidden shadow-xl rounded-lg">
-          <div className="p-5">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-blue-500/20 rounded-md flex items-center justify-center">
-                  <span className="text-blue-400 font-bold">📝</span>
-                </div>
+        <div className="bg-gray-800/70 backdrop-blur-sm overflow-hidden shadow-xl rounded-xl p-6">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <div className="w-10 h-10 bg-blue-500/30 rounded-xl flex items-center justify-center">
+                <span className="text-blue-400 font-bold text-lg">📝</span>
               </div>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium text-gray-400 truncate">
-                    Total Posts
-                  </dt>
-                  <dd className="text-lg font-medium text-white">
-                    {stats.totalPosts}
-                  </dd>
-                </dl>
-              </div>
+            </div>
+            <div className="ml-5 w-0 flex-1">
+              <dl>
+                <dt className="text-sm font-medium text-gray-300 truncate">
+                  Total Posts
+                </dt>
+                <dd className="text-xl font-bold text-white">
+                  {stats.totalPosts}
+                </dd>
+              </dl>
             </div>
           </div>
         </div>
 
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 overflow-hidden shadow-xl rounded-lg">
-          <div className="p-5">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-green-500/20 rounded-md flex items-center justify-center">
-                  <span className="text-green-400 font-bold">✅</span>
-                </div>
+        <div className="bg-gray-800/70 backdrop-blur-sm overflow-hidden shadow-xl rounded-xl p-6">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <div className="w-10 h-10 bg-green-500/30 rounded-xl flex items-center justify-center">
+                <span className="text-green-400 font-bold text-lg">✅</span>
               </div>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium text-gray-400 truncate">
-                    Published
-                  </dt>
-                  <dd className="text-lg font-medium text-white">
-                    {stats.publishedPosts}
-                  </dd>
-                </dl>
-              </div>
+            </div>
+            <div className="ml-5 w-0 flex-1">
+              <dl>
+                <dt className="text-sm font-medium text-gray-300 truncate">
+                  Published
+                </dt>
+                <dd className="text-xl font-bold text-white">
+                  {stats.publishedPosts}
+                </dd>
+              </dl>
             </div>
           </div>
         </div>
 
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 overflow-hidden shadow-xl rounded-lg">
-          <div className="p-5">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-yellow-500/20 rounded-md flex items-center justify-center">
-                  <span className="text-yellow-400 font-bold">📋</span>
-                </div>
+        <div className="bg-gray-800/70 backdrop-blur-sm overflow-hidden shadow-xl rounded-xl p-6">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <div className="w-10 h-10 bg-yellow-500/30 rounded-xl flex items-center justify-center">
+                <span className="text-yellow-400 font-bold text-lg">📋</span>
               </div>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium text-gray-400 truncate">
-                    Drafts
-                  </dt>
-                  <dd className="text-lg font-medium text-white">
-                    {stats.draftPosts}
-                  </dd>
-                </dl>
-              </div>
+            </div>
+            <div className="ml-5 w-0 flex-1">
+              <dl>
+                <dt className="text-sm font-medium text-gray-300 truncate">
+                  Drafts
+                </dt>
+                <dd className="text-xl font-bold text-white">
+                  {stats.draftPosts}
+                </dd>
+              </dl>
             </div>
           </div>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg mb-8">
-        <div className="px-4 py-5 sm:p-6">
-          <h3 className="text-lg leading-6 font-medium text-white mb-4">
-            Quick Actions
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="bg-gray-900/50 backdrop-blur-sm shadow-xl rounded-xl mb-8 p-6">
+        <h3 className="text-lg leading-6 font-medium text-white mb-6">
+          Quick Actions
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link
               href="/dashboard/posts/create"
-              className="relative group bg-gray-700/50 backdrop-blur-sm p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 rounded-lg border border-gray-600 hover:border-gray-500 transition-all duration-200"
+              className="relative group bg-gray-800/70 backdrop-blur-sm p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 rounded-xl hover:bg-gray-800/90 hover:scale-105 hover:shadow-2xl hover:border-2 hover:border-gray-400 active:border-2 active:border-gray-300 transition-all duration-150 ease-out"
             >
               <div>
                 <span className="rounded-lg inline-flex p-3 bg-blue-500/20 text-blue-400 ring-4 ring-gray-800/50">
@@ -164,7 +157,7 @@ export default function Dashboard() {
 
             <Link
               href="/dashboard/ai"
-              className="relative group bg-gray-700/50 backdrop-blur-sm p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-purple-500 rounded-lg border border-gray-600 hover:border-gray-500 transition-all duration-200"
+              className="relative group bg-gray-800/70 backdrop-blur-sm p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-purple-500 rounded-xl hover:bg-gray-800/90 hover:scale-105 hover:shadow-2xl hover:border-2 hover:border-gray-400 active:border-2 active:border-gray-300 transition-all duration-200"
             >
               <div>
                 <span className="rounded-lg inline-flex p-3 bg-purple-500/20 text-purple-400 ring-4 ring-gray-800/50">
@@ -185,7 +178,7 @@ export default function Dashboard() {
 
             <Link
               href="/dashboard/posts"
-              className="relative group bg-gray-700/50 backdrop-blur-sm p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-500 rounded-lg border border-gray-600 hover:border-gray-500 transition-all duration-200"
+              className="relative group bg-gray-800/70 backdrop-blur-sm p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-500 rounded-xl hover:bg-gray-800/90 hover:scale-105 hover:shadow-2xl hover:border-2 hover:border-gray-400 active:border-2 active:border-gray-300 transition-all duration-200"
             >
               <div>
                 <span className="rounded-lg inline-flex p-3 bg-green-500/20 text-green-400 ring-4 ring-gray-800/50">
@@ -203,20 +196,18 @@ export default function Dashboard() {
                 </p>
               </div>
             </Link>
-          </div>
         </div>
       </div>
 
       {/* Recent Posts */}
-      <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg">
-        <div className="px-4 py-5 sm:p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg leading-6 font-medium text-white">
-              Recent Posts
-            </h3>
-            <Link
-              href="/dashboard/posts"
-              className="text-sm text-blue-400 hover:text-blue-300"
+      <div className="bg-gray-800/70 backdrop-blur-sm shadow-xl rounded-xl p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg leading-6 font-medium text-white">
+            Recent Posts
+          </h3>
+          <Link
+            href="/dashboard/posts"
+            className="text-sm text-blue-400 hover:text-blue-300"
             >
               View all
             </Link>
@@ -267,7 +258,6 @@ export default function Dashboard() {
               </ul>
             </div>
           )}
-        </div>
       </div>
     </div>
   )
