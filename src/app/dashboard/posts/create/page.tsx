@@ -12,7 +12,7 @@ export default function CreatePostPage() {
   // Check if user is authenticated
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 -m-6 p-6 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-light text-white mb-4">Authentication Required</h1>
           <p className="text-white/80 mb-6">Please log in to create a new post.</p>
@@ -168,7 +168,7 @@ export default function CreatePostPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 -m-6 p-6">
+    <div>
       <div className="mb-8">
         <h1 className="text-3xl font-light text-white">Create New Post</h1>
         <p className="mt-2 text-white/80 font-light">
