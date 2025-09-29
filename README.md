@@ -25,11 +25,36 @@ A modern, full-stack content management system built with Next.js, Firebase, and
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 15, React, TypeScript
-- **Styling**: Tailwind CSS
-- **Database**: Firebase Firestore
-- **Authentication**: Firebase Auth
-- **AI**: OpenAI GPT-3.5-turbo
+### Frontend
+- **Next.js 15** - React framework with App Router
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Utility-first CSS framework
+- **PostCSS** - CSS processing
+
+### Backend & Database
+- **Firebase Firestore** - NoSQL database
+- **Firebase Authentication** - User authentication
+- **Next.js API Routes** - Server-side API endpoints
+
+### AI & External Services
+- **OpenAI GPT-3.5-turbo** - AI content generation
+- **OpenAI API** - AI service integration
+
+### Development Tools
+- **Node.js** - JavaScript runtime
+- **npm** - Package manager
+- **Git** - Version control
+- **ESLint** - Code linting
+- **TypeScript Compiler** - Type checking
+
+### UI/UX Features
+- **Responsive Design** - Mobile-first approach
+- **Glass Morphism** - Modern UI effects
+- **Dark Theme** - Professional dark interface
+- **Floating Labels** - Enhanced form UX
+- **Loading States** - User feedback
+- **Error Boundaries** - Graceful error handling
 
 ## 📋 Prerequisites
 
