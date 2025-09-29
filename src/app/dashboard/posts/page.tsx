@@ -101,7 +101,7 @@ export default function PostsPage() {
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <Link
             href="/dashboard/posts/create"
-            className="inline-flex items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 sm:w-auto transition-all duration-200"
+            className="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 sm:w-auto transition-all duration-200"
           >
             Create New Post
           </Link>
@@ -113,7 +113,7 @@ export default function PostsPage() {
         <div className="flex-1">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-5 w-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
@@ -122,7 +122,7 @@ export default function PostsPage() {
               placeholder="Search posts..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-600 rounded-md leading-5 bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:placeholder-gray-300 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-full pl-10 pr-3 py-2 border border-gray-600 rounded-md leading-5 bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:placeholder-gray-300 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -131,12 +131,12 @@ export default function PostsPage() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="block w-full pl-3 pr-10 py-2 text-base border border-gray-600 bg-gray-800 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+            className="block w-full pl-3 pr-10 py-2 text-base border border-gray-600 bg-gray-900 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
           >
-            <option value="all">All Status</option>
-            <option value="published">Published</option>
-            <option value="draft">Draft</option>
-            <option value="archived">Archived</option>
+            <option value="all" className="bg-gray-900 text-white">All Status</option>
+            <option value="published" className="bg-gray-900 text-white">Published</option>
+            <option value="draft" className="bg-gray-900 text-white">Draft</option>
+            <option value="archived" className="bg-gray-900 text-white">Archived</option>
           </select>
         </div>
       </div>
@@ -145,9 +145,9 @@ export default function PostsPage() {
       <div className="mt-8 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div className="overflow-hidden shadow-xl ring-1 ring-gray-700 md:rounded-lg bg-gray-800/50 backdrop-blur-sm">
+            <div className="overflow-hidden shadow-xl ring-1 ring-gray-700 md:rounded-lg bg-gray-900">
               <table className="min-w-full divide-y divide-gray-600">
-                <thead className="bg-gray-800/50">
+                <thead className="bg-gray-900">
                   <tr>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Title
@@ -166,7 +166,7 @@ export default function PostsPage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-gray-800/30 divide-y divide-gray-600">
+                <tbody className="bg-gray-900 divide-y divide-gray-600">
                   {filteredPosts.map((post) => (
                     <tr key={post.id} className="hover:bg-gray-700/30 transition-colors duration-200">
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -198,19 +198,19 @@ export default function PostsPage() {
                             href={`/blog/${post.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 transition-colors duration-200"
+                            className="px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors duration-200"
                           >
                             View
                           </Link>
                           <Link
                             href={`/dashboard/posts/${post.id}/edit`}
-                            className="text-purple-400 hover:text-purple-300 transition-colors duration-200"
+                            className="px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors duration-200"
                           >
                             Edit
                           </Link>
                           <button
                             onClick={() => handleDeletePost(post.id)}
-                            className="text-red-400 hover:text-red-300 transition-colors duration-200"
+                            className="px-3 py-1 bg-red-600 text-white text-xs font-medium rounded hover:bg-red-700 transition-colors duration-200"
                           >
                             Delete
                           </button>
@@ -239,7 +239,7 @@ export default function PostsPage() {
           <div className="mt-6">
             <Link
               href="/dashboard/posts/create"
-              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
+              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-all duration-200"
             >
               Create your first post
             </Link>
