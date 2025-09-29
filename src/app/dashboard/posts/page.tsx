@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { getPosts, deletePost, BlogPost } from '@/lib/firestore'
 
 export default function PostsPage() {
+  const router = useRouter()
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
@@ -34,13 +36,13 @@ export default function PostsPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'published':
-        return 'bg-green-100 text-green-800'
+        return 'bg-green-500/20 text-green-400 border border-green-500/30'
       case 'draft':
-        return 'bg-yellow-100 text-yellow-800'
+        return 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
       case 'archived':
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-gray-500/20 text-gray-400 border border-gray-500/30'
       default:
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-gray-500/20 text-gray-400 border border-gray-500/30'
     }
   }
 
@@ -68,25 +70,38 @@ export default function PostsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400"></div>
       </div>
     )
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 -m-6 p-6">
+      {/* Back Button */}
+      <div className="mb-6">
+        <button
+          onClick={() => router.back()}
+          className="inline-flex items-center text-white/80 hover:text-white transition-colors duration-200"
+        >
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
+        </button>
+      </div>
+
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-3xl font-bold text-gray-900">Posts</h1>
-          <p className="mt-2 text-gray-600">
+          <h1 className="text-3xl font-bold text-white">Posts</h1>
+          <p className="mt-2 text-gray-300">
             Manage all your blog posts and content.
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <Link
             href="/dashboard/posts/create"
-            className="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
+            className="inline-flex items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 sm:w-auto transition-all duration-200"
           >
             Create New Post
           </Link>
@@ -107,7 +122,7 @@ export default function PostsPage() {
               placeholder="Search posts..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-full pl-10 pr-3 py-2 border border-gray-600 rounded-md leading-5 bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:placeholder-gray-300 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -116,7 +131,7 @@ export default function PostsPage() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+            className="block w-full pl-3 pr-10 py-2 text-base border border-gray-600 bg-gray-800 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
           >
             <option value="all">All Status</option>
             <option value="published">Published</option>
@@ -130,20 +145,20 @@ export default function PostsPage() {
       <div className="mt-8 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead className="bg-gray-50">
+            <div className="overflow-hidden shadow-xl ring-1 ring-gray-700 md:rounded-lg bg-gray-800/50 backdrop-blur-sm">
+              <table className="min-w-full divide-y divide-gray-600">
+                <thead className="bg-gray-800/50">
                   <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Title
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Status
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Category
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Updated
                     </th>
                     <th scope="col" className="relative px-6 py-3">
@@ -151,16 +166,16 @@ export default function PostsPage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-gray-800/30 divide-y divide-gray-600">
                   {filteredPosts.map((post) => (
-                    <tr key={post.id}>
+                    <tr key={post.id} className="hover:bg-gray-700/30 transition-colors duration-200">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div>
-                            <div className="text-sm font-medium text-gray-900">
+                            <div className="text-sm font-medium text-white">
                               {post.title}
                             </div>
-                            <div className="text-sm text-gray-500">
+                            <div className="text-sm text-gray-400">
                               /{post.slug}
                             </div>
                           </div>
@@ -171,10 +186,10 @@ export default function PostsPage() {
                           {post.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
                         {post.category || '-'}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                         {formatDate(post.updated_at)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -183,19 +198,19 @@ export default function PostsPage() {
                             href={`/blog/${post.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-blue-400 hover:text-blue-300 transition-colors duration-200"
                           >
                             View
                           </Link>
                           <Link
                             href={`/dashboard/posts/${post.id}/edit`}
-                            className="text-indigo-600 hover:text-indigo-900"
+                            className="text-purple-400 hover:text-purple-300 transition-colors duration-200"
                           >
                             Edit
                           </Link>
                           <button
                             onClick={() => handleDeletePost(post.id)}
-                            className="text-red-600 hover:text-red-900"
+                            className="text-red-400 hover:text-red-300 transition-colors duration-200"
                           >
                             Delete
                           </button>
@@ -215,8 +230,8 @@ export default function PostsPage() {
           <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          <h3 className="mt-2 text-sm font-medium text-gray-900">No posts</h3>
-          <p className="mt-1 text-sm text-gray-500">
+          <h3 className="mt-2 text-sm font-medium text-white">No posts</h3>
+          <p className="mt-1 text-sm text-gray-400">
             {searchTerm || statusFilter !== 'all'
               ? 'No posts match your current filters.'
               : 'Get started by creating a new post.'}
@@ -224,7 +239,7 @@ export default function PostsPage() {
           <div className="mt-6">
             <Link
               href="/dashboard/posts/create"
-              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
             >
               Create your first post
             </Link>
