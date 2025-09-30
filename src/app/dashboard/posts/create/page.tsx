@@ -296,11 +296,11 @@ export default function CreatePostPage() {
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-3 py-3 border border-gray-700 bg-gray-800/50 backdrop-blur-sm text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 shadow-sm"
                 >
-                  <option value="draft" className="bg-gray-800 text-white">Draft</option>
-                  <option value="published" className="bg-gray-800 text-white">Published</option>
-                  <option value="archived" className="bg-gray-800 text-white">Archived</option>
+                  <option value="draft" className="bg-gray-800/90 text-white">Draft</option>
+                  <option value="published" className="bg-gray-800/90 text-white">Published</option>
+                  <option value="archived" className="bg-gray-800/90 text-white">Archived</option>
                 </select>
               </div>
             </div>
@@ -424,7 +424,7 @@ export default function CreatePostPage() {
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-light text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 shadow-lg"
+              className="px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-light text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 shadow-lg"
             >
               {loading ? (
                 <>

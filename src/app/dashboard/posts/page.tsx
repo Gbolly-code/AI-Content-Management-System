@@ -131,12 +131,12 @@ export default function PostsPage() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="block w-full pl-3 pr-10 py-2 text-base border border-gray-600 bg-gray-900 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+            className="block w-full pl-3 pr-10 py-2 text-base border border-gray-700 bg-gray-800/50 backdrop-blur-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm rounded-lg shadow-sm transition-all duration-200"
           >
-            <option value="all" className="bg-gray-900 text-white">All Status</option>
-            <option value="published" className="bg-gray-900 text-white">Published</option>
-            <option value="draft" className="bg-gray-900 text-white">Draft</option>
-            <option value="archived" className="bg-gray-900 text-white">Archived</option>
+            <option value="all" className="bg-gray-800/90 text-white">All Status</option>
+            <option value="published" className="bg-gray-800/90 text-white">Published</option>
+            <option value="draft" className="bg-gray-800/90 text-white">Draft</option>
+            <option value="archived" className="bg-gray-800/90 text-white">Archived</option>
           </select>
         </div>
       </div>
