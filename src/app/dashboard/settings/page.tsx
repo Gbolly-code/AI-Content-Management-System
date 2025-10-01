@@ -3,6 +3,8 @@
 import { useAuth } from '@/components/AuthProvider'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { motion, useInView, Variants } from 'framer-motion'
+import { useRef } from 'react'
 
 interface UserSettings {
   displayName: string
@@ -26,11 +28,84 @@ interface UserSettings {
   }
 }
 
+// Animation variants
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.1
+    }
+  }
+}
+
+const sectionVariants: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: 50,
+    scale: 0.95
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1
+  }
+}
+
+const headerVariants: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: -30,
+    scale: 0.9
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1
+  }
+}
+
+const messageVariants: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: -20,
+    scale: 0.95
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1
+  }
+}
+
 export default function SettingsPage() {
   const { user, loading } = useAuth()
   const router = useRouter()
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
+  
+  // Refs for scroll animations
+  const headerRef = useRef(null)
+  const messageRef = useRef(null)
+  const profileRef = useRef(null)
+  const themeRef = useRef(null)
+  const notificationsRef = useRef(null)
+  const aiRef = useRef(null)
+  const editorRef = useRef(null)
+  const accountRef = useRef(null)
+  const actionsRef = useRef(null)
+  
+  // In view hooks
+  const headerInView = useInView(headerRef, { once: true, margin: "-100px" })
+  const messageInView = useInView(messageRef, { once: true, margin: "-50px" })
+  const profileInView = useInView(profileRef, { once: true, margin: "-100px" })
+  const themeInView = useInView(themeRef, { once: true, margin: "-100px" })
+  const notificationsInView = useInView(notificationsRef, { once: true, margin: "-100px" })
+  const aiInView = useInView(aiRef, { once: true, margin: "-100px" })
+  const editorInView = useInView(editorRef, { once: true, margin: "-100px" })
+  const accountInView = useInView(accountRef, { once: true, margin: "-100px" })
+  const actionsInView = useInView(actionsRef, { once: true, margin: "-100px" })
 
   const [settings, setSettings] = useState<UserSettings>({
     displayName: '',
@@ -72,7 +147,7 @@ export default function SettingsPage() {
       setSettings(prev => ({
         ...prev,
         [section]: {
-          ...prev[section as keyof UserSettings],
+          ...(prev[section as keyof UserSettings] as any),
           [field]: value
         }
       }))
@@ -141,30 +216,62 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <motion.div 
+      className="min-h-screen bg-black"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-8 bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+        <motion.div 
+          ref={headerRef}
+          className="mb-8 bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+          variants={headerVariants}
+          initial="hidden"
+          animate={headerInView ? "visible" : "hidden"}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           <h1 className="text-3xl font-light text-white">Settings</h1>
           <p className="mt-2 text-white/80 font-light">
             Manage your account preferences and application settings.
           </p>
-        </div>
+        </motion.div>
 
         {/* Message */}
         {message && (
-          <div className={`mb-6 p-4 rounded-lg ${
-            message.type === 'success' 
-              ? 'bg-green-500/20 border border-green-500/30 text-green-400' 
-              : 'bg-red-500/20 border border-red-500/30 text-red-400'
-          }`}>
+          <motion.div 
+            ref={messageRef}
+            className={`mb-6 p-4 rounded-lg ${
+              message.type === 'success' 
+                ? 'bg-green-500/20 border border-green-500/30 text-green-400' 
+                : 'bg-red-500/20 border border-red-500/30 text-red-400'
+            }`}
+            variants={messageVariants}
+            initial="hidden"
+            animate={messageInView ? "visible" : "hidden"}
+            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             {message.text}
-          </div>
+          </motion.div>
         )}
 
-        <div className="space-y-6">
+        <motion.div 
+          className="space-y-6 pb-20"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ staggerChildren: 0.2, delayChildren: 0.1 }}
+        >
           {/* Profile Settings */}
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <motion.div 
+            ref={profileRef}
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+            variants={sectionVariants}
+            initial="hidden"
+            animate={profileInView ? "visible" : "hidden"}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
               <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center mr-3">
                 <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -215,10 +322,17 @@ export default function SettingsPage() {
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Theme Settings */}
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <motion.div 
+            ref={themeRef}
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+            variants={sectionVariants}
+            initial="hidden"
+            animate={themeInView ? "visible" : "hidden"}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
               <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center mr-3">
                 <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -242,10 +356,17 @@ export default function SettingsPage() {
                 <option value="auto" className="bg-gray-800/90 text-white">Auto (System)</option>
               </select>
             </div>
-          </div>
+          </motion.div>
 
           {/* Notifications */}
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <motion.div 
+            ref={notificationsRef}
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+            variants={sectionVariants}
+            initial="hidden"
+            animate={notificationsInView ? "visible" : "hidden"}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
               <div className="w-10 h-10 bg-yellow-500/20 rounded-xl flex items-center justify-center mr-3">
                 <svg className="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -285,10 +406,17 @@ export default function SettingsPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* AI Settings */}
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <motion.div 
+            ref={aiRef}
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+            variants={sectionVariants}
+            initial="hidden"
+            animate={aiInView ? "visible" : "hidden"}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
               <span className="mr-2">🤖</span>
               AI Configuration
@@ -344,10 +472,17 @@ export default function SettingsPage() {
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Editor Settings */}
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <motion.div 
+            ref={editorRef}
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+            variants={sectionVariants}
+            initial="hidden"
+            animate={editorInView ? "visible" : "hidden"}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
               <span className="mr-2">✏️</span>
               Editor Preferences
@@ -407,10 +542,17 @@ export default function SettingsPage() {
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Account Management */}
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <motion.div 
+            ref={accountRef}
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+            variants={sectionVariants}
+            initial="hidden"
+            animate={accountInView ? "visible" : "hidden"}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
               <span className="mr-2">🔒</span>
               Account Management
@@ -447,10 +589,17 @@ export default function SettingsPage() {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Action Buttons */}
-          <div className="flex justify-end space-x-4 pb-8">
+          <motion.div 
+            ref={actionsRef}
+            className="flex justify-end space-x-4 pb-8"
+            variants={sectionVariants}
+            initial="hidden"
+            animate={actionsInView ? "visible" : "hidden"}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <button
               onClick={handleReset}
               className="px-6 py-3 border border-gray-600 rounded-lg shadow-sm text-sm font-light text-white bg-gray-800/50 backdrop-blur-sm hover:bg-gray-700/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
@@ -471,9 +620,9 @@ export default function SettingsPage() {
                 'Save Settings'
               )}
             </button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   )
 }

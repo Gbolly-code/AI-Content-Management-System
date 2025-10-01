@@ -1,10 +1,16 @@
 import OpenAI from 'openai'
 
-const apiKey = process.env.OPENAI_API_KEY || process.env.NEXT_PUBLIC_OPENAI_API_KEY
-
-const openai = new OpenAI({
-  apiKey: apiKey,
-})
+const getOpenAI = () => {
+  const apiKey = process.env.OPENAI_API_KEY || process.env.NEXT_PUBLIC_OPENAI_API_KEY
+  
+  if (!apiKey) {
+    throw new Error('OpenAI API key is not configured. Please check your environment variables.')
+  }
+  
+  return new OpenAI({
+    apiKey: apiKey,
+  })
+}
 
 export interface ContentGenerationOptions {
   topic: string
@@ -28,9 +34,6 @@ export class AIContentService {
     seoDescription: string
     tags: string[]
   }> {
-    if (!apiKey) {
-      throw new Error('OpenAI API key is not configured. Please check your environment variables.')
-    }
 
     const { topic, tone = 'professional', length = 'medium', keywords = [] } = options
 
@@ -69,6 +72,7 @@ Please provide the response in this exact JSON format:
 `
 
     try {
+      const openai = getOpenAI()
       const completion = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages: [
@@ -147,6 +151,7 @@ Please provide the response in this exact JSON format:
 `
 
     try {
+      const openai = getOpenAI()
       const completion = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages: [
@@ -191,12 +196,13 @@ Return as a JSON array of strings:
 `
 
     try {
+      const openai = getOpenAI()
       const completion = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages: [
           {
             role: 'system',
-            content: 'You are a creative content strategist. Always respond with valid JSON.'
+            content: 'You are a creative content strategist. Always respond with valid JSON array format like ["idea1", "idea2", "idea3"].'
           },
           {
             role: 'user',
@@ -212,10 +218,20 @@ Return as a JSON array of strings:
         throw new Error('No response from OpenAI')
       }
 
-      return JSON.parse(response)
+      console.log('OpenAI response for ideas:', response)
+      
+      // Clean the response in case it has extra text
+      const cleanedResponse = response.trim()
+      const ideas = JSON.parse(cleanedResponse)
+      
+      if (!Array.isArray(ideas)) {
+        throw new Error('Response is not an array')
+      }
+      
+      return ideas
     } catch (error) {
       console.error('Error generating ideas:', error)
-      throw new Error('Failed to generate ideas')
+      throw new Error(`Failed to generate ideas: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
   }
 
@@ -237,6 +253,7 @@ Please provide the response in this exact JSON format:
 `
 
     try {
+      const openai = getOpenAI()
       const completion = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages: [

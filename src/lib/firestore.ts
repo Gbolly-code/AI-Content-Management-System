@@ -48,6 +48,9 @@ const PROFILES_COLLECTION = 'profiles'
 
 // Blog Posts CRUD
 export const createPost = async (postData: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>) => {
+  if (!db) {
+    throw new Error('Database is not initialized')
+  }
   const docRef = await addDoc(collection(db, POSTS_COLLECTION), {
     ...postData,
     created_at: serverTimestamp(),
@@ -57,6 +60,9 @@ export const createPost = async (postData: Omit<BlogPost, 'id' | 'created_at' | 
 }
 
 export const updatePost = async (postId: string, postData: Partial<BlogPost>) => {
+  if (!db) {
+    throw new Error('Database is not initialized')
+  }
   const postRef = doc(db, POSTS_COLLECTION, postId)
   await updateDoc(postRef, {
     ...postData,
@@ -65,11 +71,17 @@ export const updatePost = async (postId: string, postData: Partial<BlogPost>) =>
 }
 
 export const deletePost = async (postId: string) => {
+  if (!db) {
+    throw new Error('Database is not initialized')
+  }
   const postRef = doc(db, POSTS_COLLECTION, postId)
   await deleteDoc(postRef)
 }
 
 export const getPost = async (postId: string): Promise<BlogPost | null> => {
+  if (!db) {
+    throw new Error('Database is not initialized')
+  }
   const postRef = doc(db, POSTS_COLLECTION, postId)
   const postSnap = await getDoc(postRef)
   
@@ -87,6 +99,9 @@ export const getPost = async (postId: string): Promise<BlogPost | null> => {
 }
 
 export const getPostBySlug = async (slug: string): Promise<BlogPost | null> => {
+  if (!db) {
+    throw new Error('Database is not initialized')
+  }
   try {
     const q = query(collection(db, POSTS_COLLECTION), where('slug', '==', slug))
     const querySnapshot = await getDocs(q)
@@ -110,21 +125,17 @@ export const getPostBySlug = async (slug: string): Promise<BlogPost | null> => {
 }
 
 export const getPosts = async (status?: string, limitCount?: number): Promise<BlogPost[]> => {
+  if (!db) {
+    throw new Error('Database is not initialized')
+  }
   try {
-    let q = query(collection(db, POSTS_COLLECTION))
+    console.log('getPosts called with status:', status, 'limit:', limitCount)
     
-    if (status) {
-      q = query(q, where('status', '==', status))
-    }
+    // Simple query without orderBy to avoid index issues
+    const querySnapshot = await getDocs(collection(db, POSTS_COLLECTION))
+    console.log('Query snapshot size:', querySnapshot.docs.length)
     
-    q = query(q, orderBy('updated_at', 'desc'))
-    
-    if (limitCount) {
-      q = query(q, limit(limitCount))
-    }
-    
-    const querySnapshot = await getDocs(q)
-    return querySnapshot.docs.map(doc => {
+    let posts = querySnapshot.docs.map(doc => {
       const data = doc.data()
       return {
         id: doc.id,
@@ -134,6 +145,26 @@ export const getPosts = async (status?: string, limitCount?: number): Promise<Bl
         published_at: data.published_at?.toDate()
       }
     }) as BlogPost[]
+    
+    // Filter by status if specified
+    if (status) {
+      posts = posts.filter(post => post.status === status)
+    }
+    
+    // Sort by updated_at manually
+    posts.sort((a, b) => {
+      const aDate = a.updated_at instanceof Date ? a.updated_at : new Date(a.updated_at)
+      const bDate = b.updated_at instanceof Date ? b.updated_at : new Date(b.updated_at)
+      return bDate.getTime() - aDate.getTime()
+    })
+    
+    // Apply limit if specified
+    if (limitCount) {
+      posts = posts.slice(0, limitCount)
+    }
+    
+    console.log('Processed posts:', posts.length)
+    return posts
   } catch (error) {
     console.error('Error fetching posts:', error)
     return []
@@ -145,6 +176,9 @@ export const getPublishedPosts = async (limitCount?: number): Promise<BlogPost[]
 }
 
 export const getUserPosts = async (userId: string): Promise<BlogPost[]> => {
+  if (!db) {
+    throw new Error('Database is not initialized')
+  }
   const q = query(
     collection(db, POSTS_COLLECTION), 
     where('author_id', '==', userId),
@@ -165,6 +199,9 @@ export const getUserPosts = async (userId: string): Promise<BlogPost[]> => {
 
 // User Profiles
 export const createUserProfile = async (profileData: Omit<UserProfile, 'created_at' | 'updated_at'>) => {
+  if (!db) {
+    throw new Error('Database is not initialized')
+  }
   const docRef = await addDoc(collection(db, PROFILES_COLLECTION), {
     ...profileData,
     created_at: serverTimestamp(),
@@ -174,6 +211,9 @@ export const createUserProfile = async (profileData: Omit<UserProfile, 'created_
 }
 
 export const getUserProfile = async (userId: string): Promise<UserProfile | null> => {
+  if (!db) {
+    throw new Error('Database is not initialized')
+  }
   const q = query(collection(db, PROFILES_COLLECTION), where('id', '==', userId))
   const querySnapshot = await getDocs(q)
   
@@ -185,6 +225,9 @@ export const getUserProfile = async (userId: string): Promise<UserProfile | null
 }
 
 export const updateUserProfile = async (userId: string, profileData: Partial<UserProfile>) => {
+  if (!db) {
+    throw new Error('Database is not initialized')
+  }
   const q = query(collection(db, PROFILES_COLLECTION), where('id', '==', userId))
   const querySnapshot = await getDocs(q)
   

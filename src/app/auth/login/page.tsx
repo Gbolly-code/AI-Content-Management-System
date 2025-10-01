@@ -20,6 +20,10 @@ export default function LoginPage() {
     setError('')
 
     try {
+      if (!auth) {
+        setError('Authentication service is not available')
+        return
+      }
       await signInWithEmailAndPassword(auth, email, password)
       router.push('/dashboard')
     } catch (error: any) {
@@ -32,6 +36,10 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     setLoading(true)
     try {
+      if (!auth) {
+        setError('Authentication service is not available')
+        return
+      }
       const provider = new GoogleAuthProvider()
       await signInWithPopup(auth, provider)
       router.push('/dashboard')

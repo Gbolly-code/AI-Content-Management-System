@@ -111,17 +111,41 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <motion.div 
+      className="min-h-screen bg-black"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="max-w-4xl mx-auto p-6">
-        <div className="mb-8 bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+        <motion.div 
+          ref={headerRef}
+          className="mb-8 bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+          variants={headerVariants}
+          initial="hidden"
+          animate={headerInView ? "visible" : "hidden"}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           <h1 className="text-3xl font-bold text-white">Dashboard</h1>
           <p className="mt-2 text-gray-300">
             Welcome back, {user?.email}! Here's what's happening with your content.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+        <motion.div 
+          ref={statsRef}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+          variants={sectionVariants}
+          initial="hidden"
+          animate={statsInView ? "visible" : "hidden"}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          <motion.div 
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+            variants={cardVariants}
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
@@ -133,9 +157,14 @@ export default function Dashboard() {
                 <p className="text-2xl font-bold text-white">0</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <motion.div 
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+            variants={cardVariants}
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
@@ -147,9 +176,14 @@ export default function Dashboard() {
                 <p className="text-2xl font-bold text-white">0</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <motion.div 
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+            variants={cardVariants}
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-yellow-500/20 rounded-xl flex items-center justify-center">
@@ -161,33 +195,52 @@ export default function Dashboard() {
                 <p className="text-2xl font-bold text-white">0</p>
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+        <motion.div 
+          ref={quickActionsRef}
+          className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6"
+          variants={sectionVariants}
+          initial="hidden"
+          animate={quickActionsInView ? "visible" : "hidden"}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           <h3 className="text-lg font-semibold text-white mb-4">Quick Actions</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <a 
+            <motion.a 
               href="/dashboard/posts/create" 
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center block"
+              variants={cardVariants}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
             >
               Create New Post
-            </a>
-            <a 
+            </motion.a>
+            <motion.a 
               href="/dashboard/posts" 
               className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center block"
+              variants={cardVariants}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
             >
               Manage Posts
-            </a>
-            <a 
+            </motion.a>
+            <motion.a 
               href="/dashboard/analytics" 
               className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center block"
+              variants={cardVariants}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
             >
               View Analytics
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   )
 }

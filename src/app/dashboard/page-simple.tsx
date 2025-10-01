@@ -1,75 +1,13 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '@/components/AuthProvider'
 import { useRouter } from 'next/navigation'
-import { motion, useInView, Variants } from 'framer-motion'
-
-// Animation variants
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1
-    }
-  }
-}
-
-const sectionVariants: Variants = {
-  hidden: { 
-    opacity: 0, 
-    y: 50,
-    scale: 0.95
-  },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    scale: 1
-  }
-}
-
-const headerVariants: Variants = {
-  hidden: { 
-    opacity: 0, 
-    y: -30,
-    scale: 0.9
-  },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    scale: 1
-  }
-}
-
-const cardVariants: Variants = {
-  hidden: { 
-    opacity: 0, 
-    y: 20,
-    scale: 0.9
-  },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    scale: 1
-  }
-}
 
 export default function Dashboard() {
   const { user, loading } = useAuth()
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
-
-  // Refs for scroll animations
-  const headerRef = useRef(null)
-  const statsRef = useRef(null)
-  const quickActionsRef = useRef(null)
-  
-  // In view hooks - only after mounted
-  const headerInView = useInView(headerRef, { once: true, margin: "-100px" })
-  const statsInView = useInView(statsRef, { once: true, margin: "-100px" })
-  const quickActionsInView = useInView(quickActionsRef, { once: true, margin: "-100px" })
 
   useEffect(() => {
     setMounted(true)
@@ -121,7 +59,7 @@ export default function Dashboard() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6 hover:scale-105 transition-transform duration-200">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
@@ -135,7 +73,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6 hover:scale-105 transition-transform duration-200">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
@@ -149,7 +87,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6 hover:scale-105 transition-transform duration-200">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-yellow-500/20 rounded-xl flex items-center justify-center">
@@ -169,19 +107,19 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <a 
               href="/dashboard/posts/create" 
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center block"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 text-center block hover:scale-105"
             >
               Create New Post
             </a>
             <a 
               href="/dashboard/posts" 
-              className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center block"
+              className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 text-center block hover:scale-105"
             >
               Manage Posts
             </a>
             <a 
               href="/dashboard/analytics" 
-              className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center block"
+              className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 text-center block hover:scale-105"
             >
               View Analytics
             </a>

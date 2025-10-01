@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from '@/components/AuthProvider'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
@@ -12,7 +12,29 @@ export default function DashboardLayout({
 }) {
   const { user, loading, signOut } = useAuth()
   const router = useRouter()
+  const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  // Get current page title for breadcrumb
+  const getPageTitle = () => {
+    const path = pathname.split('/').pop()
+    switch (path) {
+      case 'dashboard':
+        return 'Dashboard'
+      case 'posts':
+        return 'All Posts'
+      case 'create':
+        return 'Create Post'
+      case 'ai':
+        return 'AI Assistant'
+      case 'analytics':
+        return 'Analytics'
+      case 'settings':
+        return 'Settings'
+      default:
+        return 'Dashboard'
+    }
+  }
 
   useEffect(() => {
     if (!loading && !user) {
@@ -147,9 +169,20 @@ export default function DashboardLayout({
       </div>
 
       {/* Main content */}
-      <div className="flex flex-col flex-1 bg-black rounded-lg m-4 overflow-hidden">
+      <div className="flex flex-col flex-1 bg-black rounded-lg m-4">
+        {/* Desktop header */}
+        <div className="hidden lg:block sticky top-0 z-30 bg-white/5 backdrop-blur-xl border-b border-white/10 shadow-2xl">
+          <div className="px-6 py-4">
+            <div className="flex items-center justify-center">
+              <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                Content Management System
+              </h1>
+            </div>
+          </div>
+        </div>
+
         {/* Mobile header */}
-        <div className="sticky top-0 z-10 flex-shrink-0 lg:hidden m-4 mb-0">
+        <div className="sticky top-0 z-20 flex-shrink-0 lg:hidden m-4 mb-0">
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-4">
             <div className="flex items-center">
               <button
@@ -169,7 +202,7 @@ export default function DashboardLayout({
           </div>
         </div>
 
-        <main className="flex-1 bg-black">
+        <main className="flex-1 bg-black overflow-y-auto">
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {children}

@@ -18,10 +18,13 @@ export default function PostsPage() {
 
   const fetchPosts = async () => {
     try {
+      console.log('Fetching posts...')
       const data = await getPosts()
+      console.log('Posts fetched:', data)
       setPosts(data || [])
     } catch (error) {
       console.error('Error fetching posts:', error)
+      setPosts([]) // Set empty array on error
     } finally {
       setLoading(false)
     }

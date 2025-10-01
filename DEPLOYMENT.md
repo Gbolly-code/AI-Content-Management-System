@@ -6,7 +6,7 @@ This guide will help you deploy your AI-powered Content Management System to var
 
 Before deploying, ensure you have:
 - ✅ All environment variables configured
-- ✅ Supabase database set up with proper tables
+- ✅ Firebase project set up with Firestore and Authentication
 - ✅ OpenAI API key with sufficient credits
 - ✅ Git repository with your code
 
@@ -36,17 +36,21 @@ git push origin main
 Add these in your Vercel project settings → Environment Variables:
 
 \`\`\`env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=123456789
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 OPENAI_API_KEY=your_openai_api_key
 NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
 \`\`\`
 
-#### Step 4: Configure Supabase
-Update your Supabase project settings:
-1. Go to Authentication → URL Configuration
-2. Add your Vercel URL to "Site URL" and "Redirect URLs"
-3. Add \`https://your-app.vercel.app/auth/callback\` to redirect URLs
+#### Step 4: Configure Firebase
+Update your Firebase project settings:
+1. Go to Authentication → Settings → Authorized domains
+2. Add your Vercel URL to authorized domains
+3. Configure Firestore security rules (see FIREBASE-SETUP.md)
 
 ### 2. Netlify - FREE
 
@@ -138,19 +142,22 @@ server {
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| \`NEXT_PUBLIC_SUPABASE_URL\` | Your Supabase project URL | \`https://xyz.supabase.co\` |
-| \`NEXT_PUBLIC_SUPABASE_ANON_KEY\` | Supabase anonymous key | \`eyJhbGciOiJIUzI1NiIs...\` |
+| \`NEXT_PUBLIC_FIREBASE_API_KEY\` | Firebase API key | \`AIzaSyC...\` |
+| \`NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN\` | Firebase auth domain | \`your-project.firebaseapp.com\` |
+| \`NEXT_PUBLIC_FIREBASE_PROJECT_ID\` | Firebase project ID | \`your-project-id\` |
+| \`NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET\` | Firebase storage bucket | \`your-project.appspot.com\` |
+| \`NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID\` | Firebase messaging sender ID | \`123456789\` |
+| \`NEXT_PUBLIC_FIREBASE_APP_ID\` | Firebase app ID | \`1:123456789:web:abc123\` |
 | \`OPENAI_API_KEY\` | OpenAI API key | \`sk-...\` |
 | \`NEXT_PUBLIC_APP_URL\` | Your app URL | \`https://your-app.vercel.app\` |
 
-### Getting Your Supabase Credentials
+### Getting Your Firebase Credentials
 
-1. Go to your [Supabase Dashboard](https://supabase.com/dashboard)
+1. Go to your [Firebase Console](https://console.firebase.google.com)
 2. Select your project
-3. Go to Settings → API
-4. Copy:
-   - Project URL → \`NEXT_PUBLIC_SUPABASE_URL\`
-   - Project API keys → anon public → \`NEXT_PUBLIC_SUPABASE_ANON_KEY\`
+3. Go to Project Settings → General
+4. Scroll down to "Your apps" section
+5. Copy the config values from your web app
 
 ### Getting Your OpenAI API Key
 
@@ -161,27 +168,28 @@ server {
 
 ## 🗄️ Database Setup
 
-### Option 1: Use the SQL File
-1. Go to your Supabase project
-2. Navigate to SQL Editor
-3. Copy and paste the contents of \`database-setup.sql\`
-4. Run the script
+### Firebase Firestore Setup
+1. Go to your Firebase project
+2. Navigate to Firestore Database
+3. Create database in production mode
+4. Set up security rules (see FIREBASE-SETUP.md)
+5. Enable Authentication with Email/Password
 
-### Option 2: Manual Setup
-1. Create tables manually in Supabase
-2. Set up Row Level Security policies
-3. Configure authentication settings
+### Collections Setup
+The application will automatically create the required collections:
+- \`posts\` - Blog posts and content
+- \`profiles\` - User profiles
 
 ## 🔐 Security Configuration
 
-### Supabase Security
-1. **Enable RLS**: Row Level Security is already configured
-2. **Configure Auth**: Set up authentication providers
-3. **API Keys**: Keep your service role key secret
+### Firebase Security
+1. **Firestore Rules**: Configure security rules for collections
+2. **Authentication**: Set up authentication providers
+3. **API Keys**: Keep your Firebase config secure
 
 ### Domain Configuration
 1. **HTTPS**: Always use HTTPS in production
-2. **CORS**: Configure CORS in Supabase if needed
+2. **CORS**: Configure CORS in Firebase if needed
 3. **Environment Variables**: Never commit secrets to Git
 
 ## 📊 Monitoring & Analytics
@@ -214,17 +222,17 @@ npm run build
 #### 2. Environment Variables
 - Ensure all required variables are set
 - Check variable names (case-sensitive)
-- Verify Supabase and OpenAI keys are valid
+- Verify Firebase and OpenAI keys are valid
 
 #### 3. Database Connection
-- Verify Supabase URL and keys
-- Check if tables exist
-- Ensure RLS policies are correct
+- Verify Firebase project ID and keys
+- Check if Firestore is enabled
+- Ensure security rules are correct
 
 #### 4. Authentication Issues
-- Update redirect URLs in Supabase
+- Update authorized domains in Firebase
 - Check domain configuration
-- Verify OAuth settings
+- Verify authentication settings
 
 ### Performance Optimization
 
@@ -234,13 +242,13 @@ npm run build
 - Consider CDN for images
 
 #### 2. Database Optimization
-- Add proper indexes
-- Use database connection pooling
+- Add proper indexes in Firestore
+- Use Firebase caching
 - Monitor query performance
 
 #### 3. Caching
 - Enable Vercel Edge Caching
-- Use Supabase caching
+- Use Firebase caching
 - Implement client-side caching
 
 ## 💰 Cost Estimation
@@ -250,7 +258,7 @@ npm run build
 | Service | Free Tier | Paid Plans |
 |---------|-----------|------------|
 | **Vercel** | 100GB bandwidth/month | $20/month for Pro |
-| **Supabase** | 500MB database, 50k users | $25/month for Pro |
+| **Firebase** | 1GB storage, 50k reads/day | $25/month for Blaze |
 | **OpenAI** | Pay-per-use | ~$0.002 per 1K tokens |
 
 ### Monthly Cost Estimate

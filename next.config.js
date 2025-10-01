@@ -1,11 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'firebasestorage.googleapis.com'],
   },
-  experimental: {
-    esmExternals: false,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
+  serverExternalPackages: ['firebase'],
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {

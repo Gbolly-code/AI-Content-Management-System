@@ -29,6 +29,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false)
+      return
+    }
+
     try {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         setUser(user)
@@ -44,10 +49,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.error('Firebase Auth initialization error:', error)
       setLoading(false)
     }
-  }, [])
+  }, [auth])
 
   const signOut = async () => {
-    await firebaseSignOut(auth)
+    if (auth) {
+      await firebaseSignOut(auth)
+    }
   }
 
   const value = {

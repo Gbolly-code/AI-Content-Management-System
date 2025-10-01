@@ -36,6 +36,10 @@ export default function SignupPage() {
     }
 
     try {
+      if (!auth) {
+        setError('Authentication service is not available')
+        return
+      }
       await createUserWithEmailAndPassword(auth, email, password)
       setSuccess(true)
       // Redirect to dashboard after successful signup
@@ -52,6 +56,10 @@ export default function SignupPage() {
   const handleGoogleSignup = async () => {
     setLoading(true)
     try {
+      if (!auth) {
+        setError('Authentication service is not available')
+        return
+      }
       const provider = new GoogleAuthProvider()
       await signInWithPopup(auth, provider)
       router.push('/dashboard')

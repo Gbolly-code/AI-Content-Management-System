@@ -1,17 +1,18 @@
 {
   "name": "content-management-system",
   "version": "1.0.0",
-  "description": "",
+  "description": "AI-Powered Content Management System built with Next.js, Firebase, and OpenAI",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["cms", "content-management", "ai", "nextjs", "firebase", "openai"],
+  "author": "Content Management System Team",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -21,6 +22,7 @@
     "eslint": "^9.36.0",
     "eslint-config-next": "^15.5.4",
     "firebase": "^12.3.0",
+    "framer-motion": "^12.23.22",
     "next": "^15.5.4",
     "openai": "^5.23.1",
     "react": "^19.1.1",

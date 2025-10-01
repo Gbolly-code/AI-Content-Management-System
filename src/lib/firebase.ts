@@ -1,6 +1,6 @@
-import { initializeApp, getApps } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
+import { initializeApp, getApps, FirebaseApp } from 'firebase/app'
+import { getAuth, Auth } from 'firebase/auth'
+import { getFirestore, Firestore } from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,12 +12,34 @@ const firebaseConfig = {
 }
 
 // Check if Firebase is already initialized
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+let app: FirebaseApp | undefined
+let auth: Auth | undefined
+let db: Firestore | undefined
 
-// Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app)
+// Initialize Firebase if we have valid config
+if (firebaseConfig.apiKey && firebaseConfig.projectId) {
+  try {
+    console.log('Initializing Firebase with config:', {
+      apiKey: firebaseConfig.apiKey ? 'Present' : 'Missing',
+      authDomain: firebaseConfig.authDomain,
+      projectId: firebaseConfig.projectId,
+      storageBucket: firebaseConfig.storageBucket,
+      messagingSenderId: firebaseConfig.messagingSenderId,
+      appId: firebaseConfig.appId ? 'Present' : 'Missing'
+    })
+    app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+    auth = getAuth(app)
+    db = getFirestore(app)
+    console.log('Firebase initialized successfully')
+  } catch (error) {
+    console.error('Firebase initialization error:', error)
+  }
+} else {
+  console.error('Firebase config missing:', {
+    apiKey: firebaseConfig.apiKey ? 'Present' : 'Missing',
+    projectId: firebaseConfig.projectId ? 'Present' : 'Missing'
+  })
+}
 
-// Initialize Cloud Firestore and get a reference to the service
-export const db = getFirestore(app)
-
+export { auth, db }
 export default app
