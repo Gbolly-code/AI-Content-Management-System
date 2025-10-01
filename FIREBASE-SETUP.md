@@ -58,15 +58,23 @@ service cloud.firestore {
       allow create: if request.auth != null && request.auth.uid == request.resource.data.author_id;
     }
     
-    // Profiles collection rules
-    match /profiles/{profileId} {
-      // Anyone can read profiles
-      allow read: if true;
-      // Users can update their own profile
-      allow update: if request.auth != null && request.auth.uid == profileId;
-      // Users can create their own profile
-      allow create: if request.auth != null && request.auth.uid == profileId;
-    }
+        // Profiles collection rules
+        match /profiles/{profileId} {
+          // Anyone can read profiles
+          allow read: if true;
+          // Users can update their own profile
+          allow update: if request.auth != null && request.auth.uid == profileId;
+          // Users can create their own profile
+          allow create: if request.auth != null && request.auth.uid == profileId;
+        }
+        
+        // AI Saved Items collection rules
+        match /ai-saved-items/{itemId} {
+          // Users can read, write, update, and delete their own saved items
+          allow read, write, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+          // Users can create new saved items
+          allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+        }
   }
 }
 ```

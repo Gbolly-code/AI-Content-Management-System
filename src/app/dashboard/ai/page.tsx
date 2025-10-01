@@ -1,8 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useAuth } from '@/components/AuthProvider'
+import { collection, addDoc, getDocs, deleteDoc, doc, query, where, orderBy } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 
 export default function AIPage() {
+  const { user } = useAuth()
   const [activeTab, setActiveTab] = useState<'generate' | 'optimize' | 'ideas'>('generate')
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<any>(null)
@@ -29,24 +33,37 @@ export default function AIPage() {
   const [selectedSavedItem, setSelectedSavedItem] = useState<any>(null)
   const [isLoadingSavedItems, setIsLoadingSavedItems] = useState(true)
 
-  // Load saved items from localStorage on component mount
+  // Load saved items from Firestore on component mount
   useEffect(() => {
-    const saved = localStorage.getItem('ai-saved-items')
-    if (saved) {
+    const loadSavedItems = async () => {
+      if (!user || !db) {
+        setIsLoadingSavedItems(false)
+        return
+      }
+
       try {
-        setSavedItems(JSON.parse(saved))
+        const savedItemsRef = collection(db, 'ai-saved-items')
+        const q = query(
+          savedItemsRef,
+          where('userId', '==', user.uid),
+          orderBy('createdAt', 'desc')
+        )
+        const querySnapshot = await getDocs(q)
+        const items = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setSavedItems(items)
       } catch (error) {
-        console.error('Error loading saved items:', error)
+        console.error('Error loading saved items from Firestore:', error)
         setSavedItems([])
+      } finally {
+        setIsLoadingSavedItems(false)
       }
     }
-    setIsLoadingSavedItems(false)
-  }, [])
 
-  // Save to localStorage whenever savedItems changes
-  useEffect(() => {
-    localStorage.setItem('ai-saved-items', JSON.stringify(savedItems))
-  }, [savedItems])
+    loadSavedItems()
+  }, [user])
 
   const handleGenerateContent = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -153,32 +170,54 @@ export default function AIPage() {
     }
   }
 
-  const handleSaveResult = () => {
-    if (!result) return
+  const handleSaveResult = async () => {
+    if (!result || !user || !db) return
 
-    const savedItem = {
-      id: Date.now().toString(),
-      type: activeTab,
-      title: result.title || result.optimizedTitle || `${ideaTopic} Ideas`,
-      content: result,
-      timestamp: new Date().toISOString(),
-      topic: topic || ideaTopic || content.substring(0, 50) + '...'
-    }
+    try {
+      const savedItem = {
+        userId: user.uid,
+        type: activeTab,
+        title: result.title || result.optimizedTitle || `${ideaTopic} Ideas`,
+        content: result,
+        topic: topic || ideaTopic || content.substring(0, 50) + '...',
+        createdAt: new Date()
+      }
 
-    setSavedItems(prev => [savedItem, ...prev])
-    setShowSavedItems(true)
-    
-    // Clear results screen for ideas after saving
-    if (activeTab === 'ideas') {
-      setResult(null)
-      setIdeaTopic('')
+      const docRef = await addDoc(collection(db, 'ai-saved-items'), savedItem)
+      
+      // Add the new item to local state with the Firestore ID
+      const newItem = {
+        id: docRef.id,
+        ...savedItem,
+        timestamp: savedItem.createdAt.toISOString()
+      }
+      
+      setSavedItems(prev => [newItem, ...prev])
+      setShowSavedItems(true)
+      
+      // Clear results screen for ideas after saving
+      if (activeTab === 'ideas') {
+        setResult(null)
+        setIdeaTopic('')
+      }
+    } catch (error) {
+      console.error('Error saving item to Firestore:', error)
+      setError('Failed to save item. Please try again.')
     }
   }
 
-  const handleDeleteSavedItem = (id: string) => {
-    setSavedItems(prev => prev.filter(item => item.id !== id))
-    if (selectedSavedItem && selectedSavedItem.id === id) {
-      setSelectedSavedItem(null)
+  const handleDeleteSavedItem = async (id: string) => {
+    if (!db) return
+
+    try {
+      await deleteDoc(doc(db, 'ai-saved-items', id))
+      setSavedItems(prev => prev.filter(item => item.id !== id))
+      if (selectedSavedItem && selectedSavedItem.id === id) {
+        setSelectedSavedItem(null)
+      }
+    } catch (error) {
+      console.error('Error deleting item from Firestore:', error)
+      setError('Failed to delete item. Please try again.')
     }
   }
 
@@ -190,10 +229,28 @@ export default function AIPage() {
     setSelectedSavedItem(null)
   }
 
-  const handleClearAllSavedItems = () => {
+  const handleClearAllSavedItems = async () => {
+    if (!user || !db) return
+    
     if (window.confirm('Are you sure you want to delete all saved items? This action cannot be undone.')) {
-      setSavedItems([])
-      setSelectedSavedItem(null)
+      try {
+        // Get all user's saved items
+        const savedItemsRef = collection(db, 'ai-saved-items')
+        const q = query(savedItemsRef, where('userId', '==', user.uid))
+        const querySnapshot = await getDocs(q)
+        
+        // Delete each item
+        const deletePromises = querySnapshot.docs.map(docSnapshot => 
+          deleteDoc(doc(savedItemsRef, docSnapshot.id))
+        )
+        
+        await Promise.all(deletePromises)
+        setSavedItems([])
+        setSelectedSavedItem(null)
+      } catch (error) {
+        console.error('Error clearing all saved items:', error)
+        setError('Failed to clear all items. Please try again.')
+      }
     }
   }
 
