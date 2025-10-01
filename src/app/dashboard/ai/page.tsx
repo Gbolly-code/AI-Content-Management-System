@@ -45,14 +45,21 @@ export default function AIPage() {
         const savedItemsRef = collection(db, 'ai-saved-items')
         const q = query(
           savedItemsRef,
-          where('userId', '==', user.uid),
-          orderBy('createdAt', 'desc')
+          where('userId', '==', user.uid)
         )
         const querySnapshot = await getDocs(q)
         const items = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         }))
+        
+        // Sort by createdAt in JavaScript instead of Firestore
+        items.sort((a, b) => {
+          const aTime = a.createdAt?.toDate?.() || new Date(a.timestamp || 0)
+          const bTime = b.createdAt?.toDate?.() || new Date(b.timestamp || 0)
+          return bTime.getTime() - aTime.getTime() // Descending order (newest first)
+        })
+        
         setSavedItems(items)
       } catch (error) {
         console.error('Error loading saved items from Firestore:', error)
