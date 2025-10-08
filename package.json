@@ -10,7 +10,14 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit"
   },
-  "keywords": ["cms", "content-management", "ai", "nextjs", "firebase", "openai"],
+  "keywords": [
+    "cms",
+    "content-management",
+    "ai",
+    "nextjs",
+    "firebase",
+    "openai"
+  ],
   "author": "Content Management System Team",
   "license": "MIT",
   "type": "commonjs",
@@ -27,6 +34,7 @@
     "openai": "^5.23.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-icons": "^5.5.0",
     "typescript": "^5.9.2"
   },
   "devDependencies": {

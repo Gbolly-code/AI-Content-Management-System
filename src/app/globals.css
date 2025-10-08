@@ -5,12 +5,63 @@
 :root {
   --font-inter: 'Inter', sans-serif;
   --font-poppins: 'Poppins', sans-serif;
+  --font-outfit: 'Outfit', sans-serif;
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
 }
 
 body {
-  font-family: var(--font-inter);
+  font-family: var(--font-outfit);
   min-height: 100vh;
   background: #000000;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Typography scale for Outfit */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-outfit);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem; /* 40px */
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 2rem; /* 32px */
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.75rem; /* 28px */
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 500;
+}
+
+h6 {
+  font-size: 1rem; /* 16px */
+  font-weight: 500;
+}
+
+p {
+  font-family: var(--font-outfit);
+  font-size: 1rem; /* 16px */
+  font-weight: 400;
+}
+
+button, input, textarea, select {
+  font-family: var(--font-outfit);
 }
 
 @layer utilities {
@@ -62,4 +113,18 @@ body {
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }

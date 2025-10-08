@@ -52,45 +52,8 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative py-12 px-4 sm:px-6 lg:px-8">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-gray-800">
-        {/* Tech Grid Background */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `
-              linear-gradient(rgba(66, 133, 244, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(66, 133, 244, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px'
-          }} />
-        </div>
-        
-        {/* Floating Tech Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Data Points */}
-          <div className="absolute top-20 left-20 w-2 h-2 bg-blue-400 rounded-full opacity-40 animate-pulse"></div>
-          <div className="absolute top-40 right-32 w-1.5 h-1.5 bg-green-400 rounded-full opacity-50 animate-pulse" style={{animationDelay: '1s'}}></div>
-          <div className="absolute top-60 left-1/3 w-2.5 h-2.5 bg-yellow-400 rounded-full opacity-30 animate-pulse" style={{animationDelay: '2s'}}></div>
-          <div className="absolute top-80 right-20 w-1 h-1 bg-red-400 rounded-full opacity-60 animate-pulse" style={{animationDelay: '0.5s'}}></div>
-          <div className="absolute top-32 left-1/2 w-1.5 h-1.5 bg-blue-400 rounded-full opacity-40 animate-pulse" style={{animationDelay: '1.5s'}}></div>
-          <div className="absolute top-72 right-1/3 w-2 h-2 bg-green-400 rounded-full opacity-35 animate-pulse" style={{animationDelay: '2.5s'}}></div>
-          
-          {/* Circuit Lines */}
-          <div className="absolute top-24 left-24 w-16 h-px bg-blue-400 opacity-30"></div>
-          <div className="absolute top-44 right-28 w-12 h-px bg-green-400 opacity-25"></div>
-          <div className="absolute top-64 left-1/3 w-20 h-px bg-yellow-400 opacity-20"></div>
-          <div className="absolute top-84 right-16 w-8 h-px bg-red-400 opacity-35"></div>
-          
-          {/* Vertical Lines */}
-          <div className="absolute top-20 left-32 w-px h-12 bg-blue-400 opacity-25"></div>
-          <div className="absolute top-40 right-36 w-px h-8 bg-green-400 opacity-30"></div>
-          <div className="absolute top-60 left-1/2 w-px h-16 bg-yellow-400 opacity-20"></div>
-        </div>
-        
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-gray-900/60 to-gray-800/80" />
-      </div>
+      {/* Background */}
+      <div className="absolute inset-0 bg-black"></div>
       
       {/* Content */}
       <div className="relative z-10 max-w-md w-full space-y-8">
@@ -111,14 +74,17 @@ export default function LoginPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="peer w-full px-3 py-3 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200"
+                style={{ '--tw-ring-color': '#6c63ff' } as React.CSSProperties}
+                onFocus={(e) => e.currentTarget.style.boxShadow = '0 0 0 2px #6c63ff'}
+                onBlur={(e) => e.currentTarget.style.boxShadow = ''}
                 placeholder="@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <label 
                 htmlFor="email-address" 
-                className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-400"
+                className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-purple-400"
               >
                 Email address
               </label>
@@ -130,14 +96,17 @@ export default function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 required
-                className="peer w-full px-3 py-3 pr-20 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="peer w-full px-3 py-3 pr-20 border border-gray-600 bg-gray-800/50 backdrop-blur-sm text-white placeholder-transparent rounded-lg focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200"
+                style={{ '--tw-ring-color': '#6c63ff' } as React.CSSProperties}
+                onFocus={(e) => e.currentTarget.style.boxShadow = '0 0 0 2px #6c63ff'}
+                onBlur={(e) => e.currentTarget.style.boxShadow = ''}
                 placeholder="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <label 
                 htmlFor="password" 
-                className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-400"
+                className="absolute left-3 -top-2.5 text-sm font-light text-white/90 bg-gray-900 px-1 transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:text-white/60 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-purple-400"
               >
                 Password
               </label>
@@ -182,7 +151,10 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-light rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-light rounded-lg text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              style={{ backgroundColor: '#6c63ff' }}
+              onMouseEnter={(e) => !loading && (e.currentTarget.style.backgroundColor = '#5a52d5')}
+              onMouseLeave={(e) => !loading && (e.currentTarget.style.backgroundColor = '#6c63ff')}
             >
               {loading ? 'Logging in...' : 'Log in'}
             </button>

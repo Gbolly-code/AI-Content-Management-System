@@ -4,6 +4,17 @@ import { useAuth } from '@/components/AuthProvider'
 import { useRouter, usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { 
+  ChartBarIcon, 
+  DocumentTextIcon, 
+  PencilSquareIcon, 
+  CpuChipIcon, 
+  ChartPieIcon, 
+  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon,
+  XMarkIcon,
+  Bars3Icon
+} from '@heroicons/react/24/outline'
 
 export default function DashboardLayout({
   children,
@@ -55,12 +66,12 @@ export default function DashboardLayout({
   }
 
   const navigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: '📊' },
-    { name: 'All Posts', href: '/dashboard/posts', icon: '📝' },
-    { name: 'Create Post', href: '/dashboard/posts/create', icon: '✍️' },
-    { name: 'AI Assistant', href: '/dashboard/ai', icon: '🤖' },
-    { name: 'Analytics', href: '/dashboard/analytics', icon: '📈' },
-    { name: 'Settings', href: '/dashboard/settings', icon: '⚙️' },
+    { name: 'Dashboard', href: '/dashboard', icon: ChartBarIcon },
+    { name: 'All Posts', href: '/dashboard/posts', icon: DocumentTextIcon },
+    { name: 'Create Post', href: '/dashboard/posts/create', icon: PencilSquareIcon },
+    { name: 'AI Assistant', href: '/dashboard/ai', icon: CpuChipIcon },
+    { name: 'Analytics', href: '/dashboard/analytics', icon: ChartPieIcon },
+    { name: 'Settings', href: '/dashboard/settings', icon: Cog6ToothIcon },
   ]
 
   return (
@@ -80,7 +91,7 @@ export default function DashboardLayout({
                     href={item.href}
                     className="group flex items-center px-4 py-4 text-sm font-medium rounded-xl text-gray-200 hover:bg-gray-700/60 hover:text-white transition-all duration-200 bg-gray-800/30"
                   >
-                    <span className="mr-3 text-lg">{item.icon}</span>
+                    <item.icon className="mr-3 h-5 w-5" />
                     {item.name}
                   </Link>
                 ))}
@@ -104,9 +115,7 @@ export default function DashboardLayout({
                       className="flex items-center text-red-400 hover:text-red-300 transition-colors duration-200 px-2 py-1 rounded hover:bg-red-500/20"
                       title="Sign out"
                     >
-                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                      </svg>
+                      <ArrowRightOnRectangleIcon className="w-4 h-4 mr-1" />
                       <span className="text-xs">Sign out</span>
                     </button>
                   </div>
@@ -132,9 +141,7 @@ export default function DashboardLayout({
               onClick={() => setSidebarOpen(false)}
             >
               <span className="sr-only">Close sidebar</span>
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <XMarkIcon className="h-5 w-5" />
             </button>
           </div>
           <div className="flex-1 h-0 pt-4 pb-4 overflow-y-auto">
@@ -146,7 +153,7 @@ export default function DashboardLayout({
                   className="group flex items-center px-4 py-3 text-base font-medium rounded-lg text-gray-300 hover:bg-gray-700/60 hover:text-white transition-colors duration-200"
                   onClick={() => setSidebarOpen(false)}
                 >
-                  <span className="mr-3 text-lg">{item.icon}</span>
+                  <item.icon className="mr-3 h-6 w-6" />
                   {item.name}
                 </Link>
               ))}
@@ -158,9 +165,7 @@ export default function DashboardLayout({
                 }}
                 className="w-full flex items-center px-4 py-3 text-base font-medium rounded-lg text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-colors duration-200"
               >
-                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
+                <ArrowRightOnRectangleIcon className="w-5 h-5 mr-3" />
                 Sign out
               </button>
             </nav>
@@ -191,9 +196,7 @@ export default function DashboardLayout({
                 onClick={() => setSidebarOpen(true)}
               >
                 <span className="sr-only">Open sidebar</span>
-                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
-                </svg>
+                <Bars3Icon className="h-6 w-6" />
               </button>
               <div className="flex-1 flex justify-center">
                 <h1 className="text-lg font-semibold text-white">Content Management System</h1>

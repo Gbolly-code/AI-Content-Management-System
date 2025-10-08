@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '@/components/AuthProvider'
 import { useRouter } from 'next/navigation'
 import { motion, useInView, Variants } from 'framer-motion'
+import { FaFileLines, FaCircleCheck, FaFilePen } from 'react-icons/fa6'
 
 // Animation variants
 const containerVariants: Variants = {
@@ -125,7 +126,7 @@ export default function Dashboard() {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                  <span className="text-blue-400 font-bold text-lg">📝</span>
+                  <FaFileLines className="text-blue-400 text-lg" />
                 </div>
               </div>
               <div className="ml-4">
@@ -139,7 +140,7 @@ export default function Dashboard() {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                  <span className="text-green-400 font-bold text-lg">✅</span>
+                  <FaCircleCheck className="text-green-400 text-lg" />
                 </div>
               </div>
               <div className="ml-4">
@@ -153,7 +154,7 @@ export default function Dashboard() {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-yellow-500/20 rounded-xl flex items-center justify-center">
-                  <span className="text-yellow-400 font-bold text-lg">📋</span>
+                  <FaFilePen className="text-yellow-400 text-lg" />
                 </div>
               </div>
               <div className="ml-4">

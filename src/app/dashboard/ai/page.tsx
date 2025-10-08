@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '@/components/AuthProvider'
 import { collection, addDoc, getDocs, deleteDoc, doc, query, where, orderBy } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { FaPen, FaMagnifyingGlass, FaLightbulb, FaBookmark, FaFloppyDisk, FaXmark, FaTrash } from 'react-icons/fa6'
 
 export default function AIPage() {
   const { user } = useAuth()
@@ -51,10 +52,10 @@ export default function AIPage() {
         const items = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
-        }))
+        })) as any[]
         
         // Sort by createdAt in JavaScript instead of Firestore
-        items.sort((a, b) => {
+        items.sort((a: any, b: any) => {
           const aTime = a.createdAt?.toDate?.() || new Date(a.timestamp || 0)
           const bTime = b.createdAt?.toDate?.() || new Date(b.timestamp || 0)
           return bTime.getTime() - aTime.getTime() // Descending order (newest first)
@@ -262,9 +263,9 @@ export default function AIPage() {
   }
 
   const tabs = [
-    { id: 'generate', name: 'Generate Content', icon: '✍️' },
-    { id: 'optimize', name: 'SEO Optimization', icon: '🔍' },
-    { id: 'ideas', name: 'Content Ideas', icon: '💡' },
+    { id: 'generate', name: 'Generate Content', icon: FaPen },
+    { id: 'optimize', name: 'SEO Optimization', icon: FaMagnifyingGlass },
+    { id: 'ideas', name: 'Content Ideas', icon: FaLightbulb },
   ]
 
   return (
@@ -324,7 +325,7 @@ export default function AIPage() {
                       : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-600 hover:bg-gray-700/30'
                   }`}
                 >
-                  <span className="mr-1.5 sm:mr-2 text-sm sm:text-base">{tab.icon}</span>
+                  <tab.icon className="inline mr-1.5 sm:mr-2 text-sm sm:text-base" />
                   <span className="hidden sm:inline">{tab.name}</span>
                   <span className="sm:hidden text-xs">{tab.name.split(' ')[0]}</span>
                 </button>
@@ -338,7 +339,7 @@ export default function AIPage() {
                   : 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
               }`}
             >
-              <span className="text-xs">📚</span>
+              <FaBookmark className="text-xs" />
               <span className="hidden sm:inline">Saved Items</span>
               <span className="sm:hidden">Saved</span>
               <span className={`px-1.5 py-0.5 rounded-full text-xs font-bold ${
@@ -529,7 +530,7 @@ export default function AIPage() {
                   onClick={handleSaveResult}
                   className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-2"
                 >
-                  <span>💾</span>
+                  <FaFloppyDisk />
                   Save Result
                 </button>
               )}
@@ -658,7 +659,7 @@ export default function AIPage() {
                     onClick={() => setShowSavedItems(false)}
                     className="text-gray-400 hover:text-white transition-colors duration-200"
                   >
-                    ✕
+                    <FaXmark />
                   </button>
                 </div>
               </div>
@@ -741,7 +742,7 @@ export default function AIPage() {
                     onClick={() => handleDeleteSavedItem(selectedSavedItem.id)}
                     className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-2"
                   >
-                    <span>🗑️</span>
+                    <FaTrash />
                     Delete
                   </button>
                   <button
