@@ -144,86 +144,137 @@ export default function PostsPage() {
         </div>
       </div>
 
-      {/* Posts Table */}
-      <div className="mt-8 flex flex-col">
-        <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div className="overflow-hidden shadow-xl ring-1 ring-gray-700 md:rounded-lg bg-gray-900">
-              <table className="min-w-full divide-y divide-gray-600">
-                <thead className="bg-gray-900">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Title
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Category
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Updated
-                    </th>
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Actions</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-gray-900 divide-y divide-gray-600">
-                  {filteredPosts.map((post) => (
-                    <tr key={post.id} className="hover:bg-gray-700/30 transition-colors duration-200">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div>
-                            <div className="text-sm font-medium text-white">
-                              {post.title}
-                            </div>
-                            <div className="text-sm text-gray-400">
-                              /{post.slug}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(post.status)}`}>
-                          {post.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
-                        {post.category || '-'}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
-                        {formatDate(post.updated_at)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <div className="flex items-center space-x-2">
-                          <Link
-                            href={`/blog/${post.slug}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors duration-200"
-                          >
-                            View
-                          </Link>
-                          <Link
-                            href={`/dashboard/posts/${post.id}/edit`}
-                            className="px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors duration-200"
-                          >
-                            Edit
-                          </Link>
-                          <button
-                            onClick={() => handleDeletePost(post.id)}
-                            className="px-3 py-1 bg-red-600 text-white text-xs font-medium rounded hover:bg-red-700 transition-colors duration-200"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      {/* Posts List */}
+      <div className="mt-8">
+        {/* Mobile View - Card Layout */}
+        <div className="block lg:hidden space-y-4">
+          {filteredPosts.map((post) => (
+            <div key={post.id} className="bg-gray-900 border border-gray-700 rounded-lg p-4 shadow-lg hover:border-gray-600 transition-colors duration-200">
+              {/* Header with title and status */}
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-semibold text-white mb-1 truncate">
+                    {post.title}
+                  </h3>
+                  <p className="text-sm text-gray-400 truncate">/{post.slug}</p>
+                </div>
+                <span className={`flex-shrink-0 inline-flex px-2.5 py-1 text-xs font-semibold rounded-full ${getStatusColor(post.status)}`}>
+                  {post.status}
+                </span>
+              </div>
+              
+              {/* Post details */}
+              <div className="space-y-2 mb-4 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Category:</span>
+                  <span className="text-white font-medium">{post.category || '-'}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Updated:</span>
+                  <span className="text-gray-300">{formatDate(post.updated_at)}</span>
+                </div>
+              </div>
+
+              {/* Action buttons */}
+              <div className="grid grid-cols-3 gap-2">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  View
+                </Link>
+                <Link
+                  href={`/dashboard/posts/${post.id}/edit`}
+                  className="text-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  Edit
+                </Link>
+                <button
+                  onClick={() => handleDeletePost(post.id)}
+                  className="px-3 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors duration-200"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
+          ))}
+        </div>
+
+        {/* Desktop View - Table Layout */}
+        <div className="hidden lg:block">
+          <div className="overflow-hidden shadow-xl ring-1 ring-gray-700 rounded-lg bg-gray-900">
+            <table className="min-w-full divide-y divide-gray-600">
+              <thead className="bg-gray-900">
+                <tr>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Title
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Category
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Updated
+                  </th>
+                  <th scope="col" className="relative px-6 py-3">
+                    <span className="sr-only">Actions</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-gray-900 divide-y divide-gray-600">
+                {filteredPosts.map((post) => (
+                  <tr key={post.id} className="hover:bg-gray-700/30 transition-colors duration-200">
+                    <td className="px-6 py-4">
+                      <div className="text-sm font-medium text-white">
+                        {post.title}
+                      </div>
+                      <div className="text-sm text-gray-400">
+                        /{post.slug}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(post.status)}`}>
+                        {post.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
+                      {post.category || '-'}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                      {formatDate(post.updated_at)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex items-center justify-end gap-2">
+                        <Link
+                          href={`/blog/${post.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors duration-200"
+                        >
+                          View
+                        </Link>
+                        <Link
+                          href={`/dashboard/posts/${post.id}/edit`}
+                          className="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors duration-200"
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          onClick={() => handleDeletePost(post.id)}
+                          className="px-3 py-1.5 bg-red-600 text-white text-xs font-medium rounded hover:bg-red-700 transition-colors duration-200"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

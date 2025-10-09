@@ -3,8 +3,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '@/components/AuthProvider'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { motion, useInView, Variants } from 'framer-motion'
 import { FaFileLines, FaCircleCheck, FaFilePen } from 'react-icons/fa6'
+import { getPosts, BlogPost } from '@/lib/firestore'
 
 // Animation variants
 const containerVariants: Variants = {
@@ -61,6 +63,8 @@ export default function Dashboard() {
   const { user, loading } = useAuth()
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
+  const [posts, setPosts] = useState<BlogPost[]>([])
+  const [postsLoading, setPostsLoading] = useState(true)
 
   // Refs for scroll animations
   const headerRef = useRef(null)
@@ -81,6 +85,23 @@ export default function Dashboard() {
       router.push('/auth/login')
     }
   }, [user, loading, router])
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const userPosts = await getPosts()
+        setPosts(userPosts)
+      } catch (error) {
+        console.error('Error fetching posts:', error)
+      } finally {
+        setPostsLoading(false)
+      }
+    }
+
+    if (user) {
+      fetchPosts()
+    }
+  }, [user])
 
   console.log('Dashboard render:', { loading, user: !!user, mounted })
 
@@ -122,47 +143,53 @@ export default function Dashboard() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <Link 
+            href="/dashboard/posts"
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6 hover:bg-gray-800 hover:border-blue-500/50 hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group"
+          >
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                  <FaFileLines className="text-blue-400 text-lg" />
+                <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center group-hover:bg-blue-500/30 transition-colors duration-300">
+                  <FaFileLines className="text-blue-400 text-lg group-hover:scale-110 transition-transform duration-300" />
                 </div>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-300">Total Posts</p>
-                <p className="text-2xl font-bold text-white">0</p>
+                <p className="text-sm font-medium text-gray-300 group-hover:text-blue-400 transition-colors duration-300">Total Posts</p>
+                <p className="text-2xl font-bold text-white">{postsLoading ? '-' : posts.length}</p>
+              </div>
+            </div>
+          </Link>
+
+          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6 hover:bg-gray-800 hover:border-green-500/50 hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center group-hover:bg-green-500/30 transition-colors duration-300">
+                  <FaCircleCheck className="text-green-400 text-lg group-hover:scale-110 transition-transform duration-300" />
+                </div>
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-300 group-hover:text-green-400 transition-colors duration-300">Published</p>
+                <p className="text-2xl font-bold text-white">{postsLoading ? '-' : posts.filter(p => p.status === 'published').length}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
+          <Link 
+            href="/dashboard/posts"
+            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6 hover:bg-gray-800 hover:border-yellow-500/50 hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group"
+          >
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                  <FaCircleCheck className="text-green-400 text-lg" />
+                <div className="w-10 h-10 bg-yellow-500/20 rounded-xl flex items-center justify-center group-hover:bg-yellow-500/30 transition-colors duration-300">
+                  <FaFilePen className="text-yellow-400 text-lg group-hover:scale-110 transition-transform duration-300" />
                 </div>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-300">Published</p>
-                <p className="text-2xl font-bold text-white">0</p>
+                <p className="text-sm font-medium text-gray-300 group-hover:text-yellow-400 transition-colors duration-300">Drafts</p>
+                <p className="text-2xl font-bold text-white">{postsLoading ? '-' : posts.filter(p => p.status === 'draft').length}</p>
               </div>
             </div>
-          </div>
-
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-10 h-10 bg-yellow-500/20 rounded-xl flex items-center justify-center">
-                  <FaFilePen className="text-yellow-400 text-lg" />
-                </div>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-300">Drafts</p>
-                <p className="text-2xl font-bold text-white">0</p>
-              </div>
-            </div>
-          </div>
+          </Link>
         </div>
 
         <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-6">
