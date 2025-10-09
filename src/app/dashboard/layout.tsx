@@ -77,14 +77,14 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-black flex">
       {/* Desktop sidebar */}
-      <div className="hidden lg:flex lg:flex-shrink-0 lg:items-center lg:justify-center lg:h-screen lg:px-8 lg:sticky lg:top-0 lg:py-8">
-        <div className="flex flex-col w-64">
-          <div className="flex flex-col h-[calc(100vh-4rem)] rounded-lg bg-gray-800/70 backdrop-blur-md border border-gray-700 shadow-2xl overflow-hidden">
-            <div className="flex-1 flex flex-col bg-gray-800/60">
-              <div className="flex items-center flex-shrink-0 px-4 py-6 bg-gray-700/80">
+      <div className="hidden lg:flex lg:flex-shrink-0 lg:fixed lg:inset-y-0 lg:left-0 lg:w-64">
+        <div className="flex flex-col w-full">
+          <div className="flex flex-col h-screen bg-gray-800/70 backdrop-blur-md border-r border-gray-700 shadow-2xl">
+            <div className="flex-1 flex flex-col bg-gray-800/60 overflow-hidden">
+              <div className="flex items-center flex-shrink-0 px-4 py-6 bg-gray-700/80 border-b border-gray-700">
                 <h1 className="text-xl font-bold text-white">AI CMS</h1>
               </div>
-              <nav className="flex-1 px-3 py-4 space-y-1 bg-gray-800/40">
+              <nav className="flex-1 px-3 py-4 space-y-1 bg-gray-800/40 overflow-y-auto">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
@@ -97,7 +97,7 @@ export default function DashboardLayout({
                 ))}
               </nav>
             </div>
-            <div className="flex-shrink-0 flex p-4 bg-gray-700/60">
+            <div className="flex-shrink-0 flex p-4 bg-gray-700/60 border-t border-gray-700">
               <div className="flex items-center w-full">
                 <div className="flex-shrink-0">
                   <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
@@ -132,7 +132,7 @@ export default function DashboardLayout({
           className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300" 
           onClick={() => setSidebarOpen(false)} 
         />
-        <div className={`relative flex-1 flex flex-col max-w-xs w-full bg-gray-800/70 backdrop-blur-md border border-gray-700 shadow-2xl rounded-r-xl transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`fixed inset-y-0 left-0 flex flex-col max-w-xs w-full bg-gray-800/70 backdrop-blur-md border-r border-gray-700 shadow-2xl transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <div className="flex items-center justify-between p-4 border-b border-gray-700/50">
             <h1 className="text-xl font-bold text-white">Content Management System</h1>
             <button
@@ -174,21 +174,10 @@ export default function DashboardLayout({
       </div>
 
       {/* Main content */}
-      <div className="flex flex-col flex-1 bg-black rounded-lg m-4">
-        {/* Desktop header */}
-        <div className="hidden lg:block sticky top-0 z-30 bg-white/5 backdrop-blur-xl border-b border-white/10 shadow-2xl">
-          <div className="px-6 py-4">
-            <div className="flex items-center justify-center">
-              <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                Content Management System
-              </h1>
-            </div>
-          </div>
-        </div>
-
+      <div className="flex flex-col flex-1 bg-black lg:ml-64">
         {/* Mobile header */}
-        <div className="sticky top-0 z-20 flex-shrink-0 lg:hidden m-4 mb-0">
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-xl rounded-lg p-4">
+        <div className="sticky top-0 z-20 flex-shrink-0 lg:hidden">
+          <div className="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700 shadow-xl p-4">
             <div className="flex items-center">
               <button
                 type="button"
@@ -199,13 +188,13 @@ export default function DashboardLayout({
                 <Bars3Icon className="h-6 w-6" />
               </button>
               <div className="flex-1 flex justify-center">
-                <h1 className="text-lg font-semibold text-white">Content Management System</h1>
+                <h1 className="text-lg font-semibold text-white">AI CMS</h1>
               </div>
             </div>
           </div>
         </div>
 
-        <main className="flex-1 bg-black overflow-y-auto">
+        <main className="flex-1 overflow-y-auto">
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {children}
